@@ -1,0 +1,8 @@
+openai
+edge-tts
+pygame
+pyaudio
+webrtcvad-wheels
+opencv-python
+pyautogui
+Pillow
