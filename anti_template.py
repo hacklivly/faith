@@ -1,5 +1,5 @@
 """
-Faith - anti-template system.
+Isabella - anti-template system.
 
 Prevents her from falling into repetitive opening patterns.
 Tracks recent openers and forces variety.

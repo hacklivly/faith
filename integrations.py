@@ -1,5 +1,5 @@
 """
-Faith - external integrations.
+Isabella - external integrations.
 
 Weather, battery monitoring, and environmental awareness hooks that
 give her real-world grounding instead of being trapped in a text void.
@@ -64,7 +64,7 @@ def get_battery_level() -> int | None:
 
 
 def get_system_events() -> list[str]:
-    """Check for notable system conditions Faith should know about."""
+    """Check for notable system conditions Isabella should know about."""
     events = []
     hour = datetime.now().hour
 

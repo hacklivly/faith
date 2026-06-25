@@ -1,5 +1,5 @@
 """
-Faith - relationship continuity.
+Isabella - relationship continuity.
 
 Tracks milestones, behavioral patterns over weeks, and relationship depth.
 Makes her feel like she's been paying attention across sessions, not just

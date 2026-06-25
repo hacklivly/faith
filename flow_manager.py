@@ -1,5 +1,5 @@
 """
-Faith - conversation flow manager.
+Isabella - conversation flow manager.
 
 Oobabooga-style context window management: keeps the conversation coherent
 within token limits by intelligently trimming old messages while preserving

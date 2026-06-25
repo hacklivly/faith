@@ -1,5 +1,5 @@
 """
-Faith - GUI.
+Isabella - GUI.
 
 Draggable, resizable, always-on-top window with:
 - Video background (videoplayback.mp4) with audio toggle
@@ -12,6 +12,7 @@ import queue
 import subprocess
 import threading
 import tkinter as tk
+from tkinter import ttk
 
 import cv2
 from PIL import Image, ImageTk
@@ -35,6 +36,8 @@ _music_on = True
 _status = "Listening..."
 _root = None
 _status_label = None
+_progress_bar = None
+_progress_label = None
 _mic_btn = None
 _music_btn = None
 _text_entry = None
@@ -63,6 +66,28 @@ def set_status(text: str):
             _root.after(0, lambda: _status_label.config(text=text))
         except (RuntimeError, tk.TclError):
             pass
+
+
+def set_voice_progress(percent: int, status: str):
+    """Update voice generation progress bar. Called from voice_engine."""
+    if not _root or not _progress_bar:
+        return
+    try:
+        def _update():
+            _progress_bar["value"] = percent
+            if _progress_label:
+                _progress_label.config(text=status if percent < 100 else "")
+            # Hide bar when done
+            if percent >= 100 or percent <= 0:
+                _progress_bar.pack_forget()
+                if _progress_label:
+                    _progress_label.pack_forget()
+            else:
+                _progress_label.pack(anchor="w", padx=10, pady=(0, 0))
+                _progress_bar.pack(fill="x", padx=10, pady=(0, 4))
+        _root.after(0, _update)
+    except (RuntimeError, tk.TclError):
+        pass
 
 
 def get_mic_status() -> bool:
@@ -273,7 +298,7 @@ def _start_audio():
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
         )
     except Exception as e:
-        print(f"[Faith] Audio: {e}")
+        print(f"[Isabella] Audio: {e}")
 
 
 def _stop_audio():
@@ -293,10 +318,10 @@ def _on_close():
 
 
 def run_gui():
-    global _root, _status_label, _mic_btn, _music_btn, _text_entry, _video_label
+    global _root, _status_label, _mic_btn, _music_btn, _text_entry, _video_label, _progress_bar, _progress_label
 
     _root = tk.Tk()
-    _root.title("Faith ♡")
+    _root.title("Isabella ♡")
     _root.geometry("480x350+100+100")
     _root.minsize(300, 200)
     _root.overrideredirect(False)  # Native window borders for snap and edge resizing
@@ -316,6 +341,14 @@ def run_gui():
     _status_label = tk.Label(bottom, text="Listening..." if _mic_on else "Idle", font=("Segoe UI", 9),
                              fg="#888", bg="#111")
     _status_label.pack(anchor="w", padx=10, pady=(4, 0))
+
+    # Voice progress bar (hidden by default)
+    _progress_label = tk.Label(bottom, text="", font=("Segoe UI", 8), fg="#aaa", bg="#111")
+    style = ttk.Style()
+    style.theme_use("default")
+    style.configure("Voice.Horizontal.TProgressbar", troughcolor="#222", background="#4CAF50", thickness=8)
+    _progress_bar = ttk.Progressbar(bottom, style="Voice.Horizontal.TProgressbar",
+                                     orient="horizontal", length=200, mode="determinate")
 
     # Input row
     input_row = tk.Frame(bottom, bg="#111")

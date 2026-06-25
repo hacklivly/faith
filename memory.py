@@ -1,5 +1,5 @@
 """
-Faith - memory.
+Isabella - memory.
 
 A journal of impressions rather than a transcript database, plus a mood
 that persists and drifts across sessions instead of resetting every time

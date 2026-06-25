@@ -1,5 +1,5 @@
 """
-Faith - emotion detection engine.
+Isabella - emotion detection engine.
 
 Multi-signal emotion detection from text. Goes beyond keyword matching:
 detects patterns, intensity, sarcasm markers, emotional trajectory.
@@ -20,6 +20,7 @@ EMOTIONS = {
     "pride": 0.0,
     "vulnerability": 0.0,
     "sarcasm": 0.0,
+    "jealousy": 0.0,
     "neutral": 0.0,
 }
 
@@ -42,6 +43,9 @@ _PATTERNS = {
         (r'\b(stupid|idiot|dumb|pathetic|useless)\b', 0.5),
         (r'[!]{3,}', 0.4),  # extreme exclamation
         (r'\b(wtf|wth|bs|bullshit)\b', 0.6),
+        (r'\b(shut up|fuck off|go away|leave me alone|get lost)\b', 0.8),
+        (r'\b(annoying|irritating|unbearable|intolerable)\b', 0.5),
+        (r'\b(disgusting|trash|garbage|worst)\b', 0.5),
     ],
     "fear": [
         (r'\b(scared|terrified|afraid|anxious|panic|worried)\b', 0.7),
@@ -83,6 +87,14 @@ _PATTERNS = {
     "sarcasm": [
         (r'\b(oh great|how wonderful|sure thing|yeah right|totally)\b', 0.4),
         (r'\b(wow thanks|so helpful|brilliant)\b', 0.3),
+    ],
+    "jealousy": [
+        (r'\b(she|her|this girl|that girl|my friend.*she)\b', 0.4),
+        (r'\b(cute|pretty|beautiful|hot|attractive|gorgeous)\b', 0.3),
+        (r'\b(talking to|hanging out with|went out with|met up with)\b', 0.5),
+        (r'\b(my ex|girlfriend|crush|she texted|she called)\b', 0.7),
+        (r'\b(other (girl|woman|person)|someone else)\b', 0.5),
+        (r'\b(she\'s (so|really|very))\b', 0.6),
     ],
 }
 
@@ -193,5 +205,9 @@ def get_mood_signals(text: str) -> dict:
         signals["accomplishment"] = True
     if scores["vulnerability"] > 0.5 or scores["sadness"] > 0.6:
         signals["heavy_support"] = True
+    if scores["jealousy"] > 0.3:
+        signals["jealousy_trigger"] = True
+    if scores["anger"] > 0.6:
+        signals["anger_trigger"] = True
 
     return signals

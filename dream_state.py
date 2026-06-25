@@ -1,5 +1,5 @@
 """
-Faith - dream state.
+Isabella - dream state.
 
 When she "wakes up" after being off, she reflects on significant topics
 from the previous session, producing a thought she developed "overnight."

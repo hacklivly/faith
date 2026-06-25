@@ -1,5 +1,5 @@
 """
-Faith - the brain.
+Isabella - the brain.
 
 Talks to Groq's free-tier API for reasoning, vision, and journaling.
 Supports streaming for faster first-word latency.
@@ -7,16 +7,43 @@ Supports streaming for faster first-word latency.
 import json
 import re
 import time
+from datetime import datetime
 
 from openai import OpenAI
 
 import config
 
-client = OpenAI(api_key=config.GROQ_API_KEY, base_url=config.GROQ_BASE_URL)
+_client = None
+_journal_client = None
+_vision_client = None
+
+def _get_client():
+    global _client
+    if _client is None:
+        _client = OpenAI(api_key=config.KEY_BRAIN, base_url=config.GROQ_BASE_URL)
+    return _client
+
+def _get_journal_client():
+    global _journal_client
+    if _journal_client is None:
+        _journal_client = OpenAI(api_key=config.KEY_JOURNAL, base_url=config.GROQ_BASE_URL)
+    return _journal_client
+
+def _get_vision_client():
+    global _vision_client
+    if _vision_client is None:
+        _vision_client = OpenAI(api_key=config.KEY_VISION, base_url=config.GROQ_BASE_URL)
+    return _vision_client
 
 # System prompt cache - only rebuild when mood/journal changes
 _cached_prompt = None
 _cached_prompt_hash = None
+
+
+def _inject_realtime(system_prompt: str) -> str:
+    """Append current timestamp to system prompt so Isabella always knows the time."""
+    now = datetime.now()
+    return system_prompt + f"\n[CURRENT TIMESTAMP: {now.strftime('%A, %B %d, %Y — %I:%M %p')}]\n"
 
 
 def _sentence_boundary(text):
@@ -32,7 +59,7 @@ FALLBACK_MODEL = "llama-3.1-8b-instant"  # faster, smaller, rarely rate-limited
 def get_reply_stream(system_prompt: str, conversation: list, image_base64: str = None):
     """Generator that yields complete sentences as they stream in.
     Falls back to smaller model on rate limit."""
-    messages = [{"role": "system", "content": system_prompt}] + conversation
+    messages = [{"role": "system", "content": _inject_realtime(system_prompt)}] + conversation
     model = config.BRAIN_MODEL
 
     if image_base64:
@@ -49,6 +76,7 @@ def get_reply_stream(system_prompt: str, conversation: list, image_base64: str =
     # Try primary model, fallback on rate limit
     for attempt_model in [model, FALLBACK_MODEL]:
         try:
+            client = _get_vision_client() if image_base64 else _get_client()
             stream = client.chat.completions.create(
                 model=attempt_model, messages=messages, temperature=0.9, stream=True
             )
@@ -80,7 +108,7 @@ def get_reply(system_prompt: str, conversation: list, image_base64: str = None) 
         parts = list(get_reply_stream(system_prompt, conversation, image_base64))
         return " ".join(parts)
 
-    messages = [{"role": "system", "content": system_prompt}] + conversation
+    messages = [{"role": "system", "content": _inject_realtime(system_prompt)}] + conversation
     model = config.BRAIN_MODEL
 
     if image_base64:
@@ -96,6 +124,7 @@ def get_reply(system_prompt: str, conversation: list, image_base64: str = None) 
 
     for attempt_model in [model, FALLBACK_MODEL]:
         try:
+            client = _get_vision_client() if image_base64 else _get_client()
             response = client.chat.completions.create(
                 model=attempt_model, messages=messages, temperature=0.9
             )
@@ -109,10 +138,10 @@ def get_reply(system_prompt: str, conversation: list, image_base64: str = None) 
 
 
 def inner_monologue(user_text: str, mood: dict, journal_snippets: list) -> str:
-    """Silent pre-processing: Faith thinks before responding."""
+    """Silent pre-processing: Isabella thinks before responding."""
     memories = "; ".join(journal_snippets[-3:]) if journal_snippets else "no memories yet"
     prompt = (
-        f"You are Faith's inner voice. The user just said: \"{user_text}\"\n"
+        f"You are Isabella's inner voice. The user just said: \"{user_text}\"\n"
         f"Your current mood: valence={mood.get('valence', 0.6)}, energy={mood.get('energy', 0.7)}\n"
         f"Recent memories: {memories}\n\n"
         "Think privately (2-3 sentences max): What's his emotional state? "
@@ -121,7 +150,7 @@ def inner_monologue(user_text: str, mood: dict, journal_snippets: list) -> str:
     )
     for model in [config.BRAIN_MODEL, FALLBACK_MODEL]:
         try:
-            response = client.chat.completions.create(
+            response = _get_journal_client().chat.completions.create(
                 model=model,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.7,
@@ -146,7 +175,7 @@ Respond ONLY as JSON in this exact shape: {{"journal": "...", "mood": "...", "mo
 
     for model in [config.BRAIN_MODEL, FALLBACK_MODEL]:
         try:
-            response = client.chat.completions.create(
+            response = _get_journal_client().chat.completions.create(
                 model=model,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.7,
@@ -163,13 +192,13 @@ Respond ONLY as JSON in this exact shape: {{"journal": "...", "mood": "...", "mo
 
 
 def check_persona_drift(reply: str, core_traits: list[str]) -> float:
-    """Quick check: how much does this reply drift from Faith's core identity.
+    """Quick check: how much does this reply drift from Isabella's core identity.
     Returns 0.0 (perfect match) to 1.0 (completely off-character).
     Uses heuristic checks instead of LLM call for speed."""
     score = 0.0
     lower = reply.lower()
 
-    # Red flags - things Faith should NEVER say
+    # Red flags - things Isabella should NEVER say
     red_flags = [
         "as an ai", "i'm just a language model", "i don't have feelings",
         "i can't actually", "i'm not capable", "i don't have access",
@@ -192,8 +221,9 @@ def check_persona_drift(reply: str, core_traits: list[str]) -> float:
 
     # Green signals - these reduce drift score (she's being herself)
     green_signals = [
-        "honestly", "ngl", "lowkey", "idk", "lol", "bruh",
-        "fair", "yeah", "nah", "hmm", "anyway",
+        "master", "understood", "noted", "hmm",
+        "did you eat", "you should sleep", "take a break",
+        "...i see", "if you say so", "i'll be here",
     ]
     for signal in green_signals:
         if signal in lower:

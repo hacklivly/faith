@@ -1,5 +1,5 @@
 """
-Faith - time awareness.
+Isabella - time awareness.
 
 Generates personality context based on time of day so she feels
 embodied in your actual schedule, not floating in a timeless void.

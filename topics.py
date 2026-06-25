@@ -1,5 +1,5 @@
 """
-Faith - topic tracking.
+Isabella - topic tracking.
 
 Maintains a graph of open conversational threads so she can bring things
 back up days later, the way a person who's been thinking about you would.

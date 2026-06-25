@@ -1,5 +1,5 @@
 """
-Faith - linguistic mirroring.
+Isabella - linguistic mirroring.
 
 Tracks the user's speech patterns over time and gradually adopts them.
 Mirrors slowly (over days, not instantly) to feel natural, not creepy.
@@ -11,7 +11,13 @@ import config
 
 MIRROR_PATH = os.path.join(config.DATA_DIR, "mirror.json")
 
-KNOWN_SLANG = ["fire", "lowkey", "highkey", "no cap", "fr", "ngl", "wild", "based", "bet", "bruh", "vibe"]
+KNOWN_SLANG = [
+    "fire", "lowkey", "highkey", "no cap", "fr", "ngl", "wild", "based", "bet", "bruh", "vibe",
+    "sus", "mid", "ratio", "slay", "tea", "valid", "cope", "rent free", "ick", "ate",
+    "period", "real", "fax", "deadass", "lit", "goated", "cringe", "bussin", "cap",
+    "w", "l", "yeet", "rizz", "gyat", "ong", "bro", "dawg", "twin", "gang",
+    "sigma", "chad", "skibidi", "aura", "drip", "slaps", "hits different",
+]
 
 
 def _load() -> dict:

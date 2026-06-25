@@ -1,5 +1,5 @@
 """
-Faith - response timing.
+Isabella - response timing.
 
 Variable delays before speaking so she doesn't fire back at machine speed.
 Quick agreement is instant; emotional responses get a thinking pause.

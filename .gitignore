@@ -4,4 +4,7 @@ __pycache__/
 *.webm
 *.crdownload
 data/
-*.env
+.env
+models/
+*.wav
+*.mp3

@@ -1,5 +1,5 @@
 """
-Faith - the scheduler.
+Isabella - the scheduler.
 
 Lets her speak first sometimes, on a randomized rhythm rather than a fixed
 timer, so the proactive check-ins don't feel robotic.

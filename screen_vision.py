@@ -1,5 +1,5 @@
 """
-Faith - screen vision.
+Isabella - screen vision.
 
 Captures desktop screenshot on demand (not continuously) and encodes it
 for sending to Groq vision alongside the webcam frame.

@@ -1,8 +1,16 @@
 openai
+requests
 edge-tts
-pygame
+RealtimeTTS[coqui]
 pyaudio
 webrtcvad-wheels
 opencv-python
+numpy
 pyautogui
 Pillow
+PyMuPDF
+pytesseract
+selenium==4.25.0
+webdriver-manager==4.0.2
+
+psutil

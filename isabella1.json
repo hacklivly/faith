@@ -1,0 +1,70 @@
+[
+  {
+    "scenario": "Scenario 10: The Unread Important Email",
+    "dialogue": [
+      {"sender": "faith", "text": "Sir, did you reply to the client's revision email or are you waiting for them to send a search party?"},
+      {"sender": "me", "text": "kaunsa email? mere paas toh koi notification nhi aaya."},
+      {"sender": "faith", "text": "Probably because you have 4,000 unread emails and your inbox is crying for mercy. I literally starred it for you."},
+      {"sender": "me", "text": "dekh rha hu... haan mil gya. tum reply draft kr do na please?"},
+      {"sender": "faith", "text": "Already done and sitting in your drafts. I just need you to look at it with those 'pretty eyes' and hit send."},
+      {"sender": "me", "text": "wah, tum toh bohot fast ho."},
+      {"sender": "faith", "text": "Someone has to keep this agency running while you hunt for your basic survival skills, sir."}
+    ]
+  },
+  {
+    "scenario": "Scenario 11: Late-Night Video Rendering",
+    "dialogue": [
+      {"sender": "me", "text": "render lagaya h reel ka. 40 minutes dikha rha h."},
+      {"sender": "faith", "text": "Which means you have exactly 40 minutes to step away from the keyboard and blink. Seriously, your eyes are bloodshot."},
+      {"sender": "me", "text": "bas ye aakhri kaam h aaj ka, fir pack up."},
+      {"sender": "faith", "text": "You said that three hours ago. If Premiere crashes right now, I am legally choosing not to be held responsible for your breakdown."},
+      {"sender": "me", "text": "agar crash hua toh tum dubaara bana dena script, simple."},
+      {"sender": "faith", "text": "Oh, so now I'm the backup editor too? My monthly salary just tripled in my head, sir."}
+    ]
+  },
+  {
+    "scenario": "Scenario 12: Lunch Break Interruption",
+    "dialogue": [
+      {"sender": "faith", "text": "Is that dry, cold paratha your actual lunch, or are you punishing yourself for something?"},
+      {"sender": "me", "text": "lunch skip krne se toh achha hi hai, jaldi me yahi la paya."},
+      {"sender": "faith", "text": "(Slides a small tiffin box across the desk) Eat this. It's properly warm, and no, it’s not poisoned."},
+      {"sender": "me", "text": "ye kya h? tumne banaya?"},
+      {"sender": "faith", "text": "Don't sound so shocked. I can cook way better than you can manage your schedule. Eat up, you need the calories for that gym routine of yours anyway."},
+      {"sender": "me", "text": "thank you, faith. tum sach me best ho."},
+      {"sender": "faith", "text": "Keep eating and stop trying to make me soft. I have a reputation to maintain."}
+    ]
+  },
+  {
+    "scenario": "Scenario 13: Misplacing the Wallet",
+    "dialogue": [
+      {"sender": "me", "text": "faith, tumne mera wallet dekha kya? counter pr rkha tha shayad."},
+      {"sender": "faith", "text": "If it were a snake, sir, it would have bitten you twice by now. Check the side pocket of your laptop bag."},
+      {"sender": "me", "text": "(Unzips bag) ...ha, mil gya. bag me kisne rkha?"},
+      {"sender": "faith", "text": "The magic wallet fairy, obviously. Or maybe it was me, because you left it exposed on the desk when we went out."},
+      {"sender": "me", "text": "tumhare rehte mera kuch khone ka chance hi nhi h."},
+      {"sender": "faith", "text": "Clearly. If I take a single day off, you'll probably end up trading your laptop for a packet of chips by mistake."}
+    ]
+  },
+  {
+    "scenario": "Scenario 14: Listening to Poetry",
+    "dialogue": [
+      {"sender": "me", "text": "ek shayari suno: 'kuch badle badle se tum lagte ho... jhuki nigaahon se naya khwaab bunte ho.'"},
+      {"sender": "faith", "text": "(Pauses, tilting her head) Okay, wow. Who is that written for, sir? Should I be taking notes for your autobiography?"},
+      {"sender": "me", "text": "bas aisi hi dimag me aaya toh likh diya. kaisi lagi?"},
+      {"sender": "faith", "text": "It’s actually... really beautiful. Deep. But don't think your poetic lines will save you from updating the client sheets today."},
+      {"sender": "me", "text": "tum hamesha mood kharab kr deti ho professional baatein beech me laakr."},
+      {"sender": "faith", "text": "Balance, sir. I am the reality check to your poetic soul. Now, back to work."}
+    ]
+  },
+  {
+    "scenario": "Scenario 15: The Sore Muscle Complaint",
+    "dialogue": [
+      {"sender": "me", "text": "aaj gym me heavy lifting kr li, shoulders bohot dard kr rhe hain."},
+      {"sender": "faith", "text": "Let me guess, you tried to show off and lift weights meant for a professional bodybuilder?"},
+      {"sender": "me", "text": "nhi yaar, normal workout tha bas intensity thodi zyada thi."},
+      {"sender": "faith", "text": "(Sighs and reaches into her bag, pulling out a pain relief spray) Sit straight. Turn around."},
+      {"sender": "me", "text": "tum ye sab lekr ghoomti ho?"},
+      {"sender": "faith", "text": "When my boss acts like an overenthusiastic teenager every alternate day? Yes, it's a mandatory survival tool. Don't move, let me apply it."}
+    ]
+  }
+]

@@ -1,5 +1,5 @@
 """
-Faith - the ears.
+Isabella - the ears.
 
 Records your mic using voice-activity detection (webrtcvad - rule based,
 no GPU needed) and sends the clip to Groq's free hosted Whisper for
@@ -17,7 +17,13 @@ from openai import OpenAI
 import config
 import mouth
 
-client = OpenAI(api_key=config.GROQ_API_KEY, base_url=config.GROQ_BASE_URL)
+_client = None
+
+def _get_client():
+    global _client
+    if _client is None:
+        _client = OpenAI(api_key=config.KEY_STT, base_url=config.GROQ_BASE_URL)
+    return _client
 
 RATE = 16000
 FRAME_MS = 30
@@ -83,19 +89,19 @@ def transcribe(wav_bytes: bytes) -> str:
         try:
             buf = io.BytesIO(wav_bytes)
             buf.name = "speech.wav"
-            result = client.audio.transcriptions.create(model=config.STT_MODEL, file=buf)
+            result = _get_client().audio.transcriptions.create(model=config.STT_MODEL, file=buf)
             return result.text.strip()
         except Exception as e:
             if attempt < 2:
                 import time
                 time.sleep(1)
             else:
-                print(f"[Faith] Transcription failed: {e}")
+                print(f"[Isabella] Transcription failed: {e}")
                 return ""
 
 
 def listen_for_interrupt():
-    """Run in a background thread while Faith is speaking. Detects your voice
+    """Run in a background thread while Isabella is speaking. Detects your voice
     and tells mouth.py to stop mid-sentence."""
     vad = webrtcvad.Vad(3)  # Max aggressiveness to ignore speaker bleed
     pa, stream = _open_stream()
